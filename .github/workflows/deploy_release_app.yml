@@ -1,0 +1,114 @@
+name: Deploy Release App
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Deploy Release App to Google Play
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+        cache: gradle
+
+    - name: Set up Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: "2.x"
+
+    - name: Gem caching
+      id: gem_cache
+      uses: actions/cache@v2
+      continue-on-error: true
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+
+    - name: Cache Gradle packages
+      id: cache_gradle_packages
+      uses: actions/cache@v2
+      continue-on-error: true
+      with:
+        path: |
+          ~/.gradle/caches/modules-*
+          ~/.gradle/caches/jars-*
+          ~/.gradle/caches/build-cache-*
+        key: ${{ runner.os }}-gradle-${{ hashFiles('checksum.txt') }}
+
+    - name: Bundle Install
+      run: |
+        gem install bundler:1.17.2
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Json Path
+      run: |
+        json_path=$GITHUB_WORKSPACE/app/service_json.json
+        echo "::set-output name=JSON_PATH::${json_path}"
+      id: json-path
+
+    - name: Keystore Path
+      run: |
+        store_path=$GITHUB_WORKSPACE/app/release.keystore
+        echo "::set-output name=STORE_PATH::${store_path}"
+      id: store-path
+
+    - name: Import Keystore and Json
+      run: |
+        echo "${{ secrets.SERVICE_JSON }}" > service_json.txt
+        base64 --decode service_json.txt > ${{ steps.json-path.outputs.JSON_PATH }}
+        echo "${{ secrets.STORE_FILE }}" > release.txt
+        base64 --decode release.txt > ${{ steps.store-path.outputs.STORE_PATH }}
+
+    - name: Git Settings
+      run: |
+        git config --local user.email "runner@${{ runner.os }}"
+        git config --local user.name "runner"
+
+    - name: Check History
+      run: |
+        hash=$(git log --no-walk --tags --pretty="%h" | head -n 1)
+        count=$(git log --all $hash^..HEAD --pretty="%h %d %s" --grep \deploy_debug | wc -l)
+        echo "::set-output name=HISTORY_COUNT::${count}"
+      id: check-history
+
+    - name: Increment Version Code
+      if: steps.check-history.outputs.HISTORY_COUNT == 0
+      run: |
+        git pull
+        ./gradlew incrementVersionCode
+        git add $GITHUB_WORKSPACE/app/build.gradle
+        git commit -m "update version code" -a
+        git push origin ${GITHUB_REF##*/}
+
+    - name: Upload Google Play
+      env:
+        SERVICE_JSON: ${{ steps.json-path.outputs.JSON_PATH }}
+        STORE_FILE: ${{ steps.store-path.outputs.STORE_PATH }}
+        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      run: bundle exec fastlane deploy_release
+
+    - name: Add Tag
+      run: |
+        version=$(./gradlew -q printVersionName | tail -n 1)
+        git tag "${version}"
+        git pull
+        git push -f --tags

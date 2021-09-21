@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "596497828880",
+    "project_id": "github-action-test-f0eea",
+    "storage_bucket": "github-action-test-f0eea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596497828880:android:c40fa4beae9a7b5cde8e95",
+        "android_client_info": {
+          "package_name": "co.jp.avelio.action_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596497828880-pa85tdrbin8mjan24q590c8232tts0ao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCctOV6Q3P6ZeHxqgKIjcWvEow_JgeAa6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596497828880-pa85tdrbin8mjan24q590c8232tts0ao.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "596497828880-sg2suqr64ut4h9ik30ffmfc7htenkfbi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "jp.co.avelio.github-action"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
