@@ -56,16 +56,17 @@ jobs:
       run: chmod +x gradlew
 
     - name: check path
-      run: echo $GITHUB_WORKSPACE
+      run: echo $GITHUB_WORKSPACE/app/release.keystore
 
     - name: Import Store File
       run: |
         echo "${{ secrets.STORE_FILE }}" > release.txt
-        base64 --decode release.txt > /home/runner/work/action-test-android/action-test-android/app/release.keystore
+        base64 --decode release.txt > $GITHUB_WORKSPACE/app/release.keystore
 
     - name: Fastlane deploy
       env:
         API_CONTENTS: ${{ secrets.ASC_KEY_CONTENT }}
+        STORE_FILE: $GITHUB_WORKSPACE/app/release.keystore
         STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
