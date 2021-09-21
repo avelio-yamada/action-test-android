@@ -23,7 +23,7 @@ platform :android do
 
   desc "Deploy Debug App to Google Play"
   lane :deploy_debug do
-    gradle(task: "clean assembleDebug",
+    gradle(task: "clean assembleDevelop",
       properties: {
         "android.injected.signing.store.file" => "release.keystore",
         "android.injected.signing.store.password" => ENV["STORE_PASSWORD"],
