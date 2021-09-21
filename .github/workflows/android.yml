@@ -55,6 +55,9 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
+    - name: check path
+      run: echo $GITHUB_WORKSPACE
+
     - name: Import Store File
       run: |
         echo "${{ secrets.STORE_FILE }}" > release.txt
