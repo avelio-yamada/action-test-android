@@ -24,7 +24,6 @@ android {
     buildTypes {
         develop {
             debuggable true
-            applicationIdSuffix ".avelio_dev"
             signingConfig signingConfigs.debug
         }
         release {
