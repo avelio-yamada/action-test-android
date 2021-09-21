@@ -1,4 +1,4 @@
-name: Deploy Android
+name: Deploy Debug App to Google Play
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Deploy Android
+    name: Deploy Debug App to Google Play
     runs-on: ubuntu-latest
 
     steps:
@@ -55,17 +55,18 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: check path
+    - name: Check Keystore Path
       run: |
         path=$GITHUB_WORKSPACE/app/release.keystore
         echo "::set-output name=PATH::${path}"
       id: step-path
-    - name: Import Store File
+
+    - name: Import Keystore
       run: |
         echo "${{ secrets.STORE_FILE }}" > release.txt
         base64 --decode release.txt > ${{ steps.step-path.outputs.PATH }}
 
-    - name: Fastlane deploy
+    - name: Upload Google Play
       env:
         API_CONTENTS: ${{ secrets.ASC_KEY_CONTENT }}
         STORE_FILE: ${{ steps.step-path.outputs.PATH }}
