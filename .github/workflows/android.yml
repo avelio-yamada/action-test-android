@@ -24,6 +24,7 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: "2.x"
+
     - name: Gem caching
       id: gem_cache
       uses: actions/cache@v2
@@ -34,7 +35,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gems-
 
-            - name: Grant execute permission for gradlew
+    - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
     - name: Bundle Install
