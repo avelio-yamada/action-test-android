@@ -55,15 +55,20 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
+    - name: check path
+      run: |
+        path=$GITHUB_WORKSPACE/app/release.keystore
+        echo "::set-output name=PATH::${path}"
+      id: step-path
     - name: Import Store File
       run: |
         echo "${{ secrets.STORE_FILE }}" > release.txt
-        base64 --decode release.txt > /home/runner/work/action-test-android/action-test-android/app/release.keystore
+        base64 --decode release.txt > ${{ steps.step-path.outputs.PATH }}
 
     - name: Fastlane deploy
       env:
         API_CONTENTS: ${{ secrets.ASC_KEY_CONTENT }}
-        STORE_FILE: /home/runner/work/action-test-android/action-test-android/app/release.keystore
+        STORE_FILE: ${{ steps.step-path.outputs.PATH }}
         STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
