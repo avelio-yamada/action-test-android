@@ -23,8 +23,8 @@ platform :android do
 
   desc "Deploy Debug App to Google Play"
   lane :deploy_debug do
+    gradle(task: "clean")
     gradle(task: "assembleDevelop",
-      print_command: false,
       properties: {
         "android.injected.signing.store.file" => "release.keystore",
         "android.injected.signing.store.password" => ENV["STORE_PASSWORD"],
@@ -37,7 +37,8 @@ platform :android do
 
   desc "Deploy Release App to Google Play"
   lane :deploy_release do
-    gradle(task: "clean assembleRelease",
+    gradle(task: "clean")
+    gradle(task: "assembleRelease",
       properties: {
         "android.injected.signing.store.file" => "release.keystore",
         "android.injected.signing.store.password" => ENV["STORE_PASSWORD"],
