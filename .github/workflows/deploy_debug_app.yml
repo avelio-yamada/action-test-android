@@ -57,19 +57,23 @@ jobs:
 
     - name: Check Keystore Path
       run: |
-        path=$GITHUB_WORKSPACE/app/release.keystore
-        echo "::set-output name=PATH::${path}"
+        store_path=$GITHUB_WORKSPACE/app/release.keystore
+        echo "::set-output name=STORE_PATH::${store_path}"
+        json_path=$GITHUB_WORKSPACE/app/play_config.json
+        echo "::set-output name=JSON_PATH::${json_path}"
       id: step-path
 
-    - name: Import Keystore
+    - name: Import Keystore and Config File
       run: |
         echo "${{ secrets.STORE_FILE }}" > release.txt
-        base64 --decode release.txt > ${{ steps.step-path.outputs.PATH }}
+        base64 --decode release.txt > ${{ steps.step-path.outputs.STORE_PATH }}
+        echo "${{ secrets.PLAY_CONFIG }}" > play_config.txt
+        base64 --decode play_config.txt > ${{ steps.step-path.outputs.JSON_PATH }}
 
     - name: Upload Google Play
       env:
-        API_CONTENTS: ${{ secrets.ASC_KEY_CONTENT }}
-        STORE_FILE: ${{ steps.step-path.outputs.PATH }}
+        CONFIG_JSON: ${{ steps.step-path.outputs.JSON_PATH }}
+        STORE_FILE: ${{ steps.step-path.outputs.STORE_PATH }}
         STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}

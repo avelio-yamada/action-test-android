@@ -32,7 +32,9 @@ platform :android do
         "android.injected.signing.key.password" => ENV["KEY_PASSWORD"]
       }
     )
-    # upload_to_play_store
+    upload_to_play_store(
+      json_key: ENV["PLAY_CONFIG"]
+    )
   end
 
   desc "Deploy Release App to Google Play"
@@ -46,6 +48,8 @@ platform :android do
         "android.injected.signing.key.password" => ENV["KEY_PASSWORD"]
       }
     )
-    # upload_to_play_store
+    upload_to_play_store(
+      json_key: ENV["PLAY_CONFIG"]
+    )
   end
 end
