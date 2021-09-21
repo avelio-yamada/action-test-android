@@ -1,4 +1,4 @@
-name: Android CI
+name: Deploy Android
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-
+    name: Deploy Android
     runs-on: ubuntu-latest
 
     steps:
@@ -46,20 +46,24 @@ jobs:
           ~/.gradle/caches/build-cache-*
         key: ${{ runner.os }}-gradle-${{ hashFiles('checksum.txt') }}
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-
     - name: Bundle Install
       run: |
         gem install bundler:1.17.2
         bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
 
-    - name: Fastlane test
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+      - name: Import Store File
+      run: |
+        echo "${{ secrets.STORE_FILE }}" > release.txt
+        base64 --decode release.txt > release.keystore
+
+    - name: Fastlane deploy
       env:
         API_CONTENTS: ${{ secrets.ASC_KEY_CONTENT }}
-        STORE_FILE: ${{ secrets.KEYCHAIN_PASSWORD }}
-        STORE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
-        KEY_ALIAS: ${{ secrets.ASC_KEY_ID }}
-        KEY_PASSWORD: ${{ secrets.ASC_ISSUER_ID }}
-      run: bundle exec fastlane test
+        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      run: bundle exec fastlane deploy_debug
