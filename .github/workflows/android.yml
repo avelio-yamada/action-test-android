@@ -66,7 +66,6 @@ jobs:
     - name: Fastlane deploy
       env:
         API_CONTENTS: ${{ secrets.ASC_KEY_CONTENT }}
-        STORE_FILE: $GITHUB_WORKSPACE/app/release.keystore
         STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
