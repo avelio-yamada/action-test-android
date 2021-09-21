@@ -58,7 +58,7 @@ jobs:
     - name: Import Store File
       run: |
         echo "${{ secrets.STORE_FILE }}" > release.txt
-        base64 --decode release.txt > action-test-android/app/release.keystore
+        base64 --decode release.txt > ./action-test-android/app/release.keystore
 
     - name: Fastlane deploy
       env:
