@@ -35,6 +35,17 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gems-
 
+    - name: Cache Gradle packages
+      id: cache_gradle_packages
+      uses: actions/cache@v2
+      continue-on-error: true
+      with:
+        path: |
+          ~/.gradle/caches/modules-*
+          ~/.gradle/caches/jars-*
+          ~/.gradle/caches/build-cache-*
+        key: ${{ runner.os }}-gradle-${{ hashFiles('checksum.txt') }}
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
@@ -45,4 +56,10 @@ jobs:
         bundle install --jobs 4 --retry 3
 
     - name: Fastlane test
+      env:
+        API_CONTENTS: ${{ secrets.ASC_KEY_CONTENT }}
+        STORE_FILE: ${{ secrets.KEYCHAIN_PASSWORD }}
+        STORE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.ASC_KEY_ID }}
+        KEY_PASSWORD: ${{ secrets.ASC_ISSUER_ID }}
       run: bundle exec fastlane test
