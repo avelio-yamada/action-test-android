@@ -89,7 +89,7 @@ jobs:
     - name: Git Settings
       run: |
         git config --local user.email "t_yamada@avelio.co.jp"
-        git config --local user.email "Taiki Yamada"
+        git config --local user.name "Taiki Yamada"
 
     - name: Push Version Code
       run: |
