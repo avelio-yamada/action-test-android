@@ -32,8 +32,11 @@ platform :android do
         "android.injected.signing.key.password" => ENV["KEY_PASSWORD"]
       }
     )
+
+    gradle(task: "incrementVersionCode")
+
     upload_to_play_store(
-      json_key: ENV["PLAY_CONFIG"]
+      json_key: ENV["CONFIG_JSON"]
     )
   end
 
@@ -49,7 +52,7 @@ platform :android do
       }
     )
     upload_to_play_store(
-      json_key: ENV["PLAY_CONFIG"]
+      json_key: ENV["CONFIG_JSON"]
     )
   end
 end
