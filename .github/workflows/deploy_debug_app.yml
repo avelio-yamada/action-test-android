@@ -97,3 +97,8 @@ jobs:
         git commit -m "update version code" -a
         git pull
         git push origin main
+
+    - name: Version Name
+      run: |
+        version="./gradlew printVersionName"
+        echo "v${version}"
