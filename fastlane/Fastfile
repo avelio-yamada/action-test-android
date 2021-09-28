@@ -33,12 +33,6 @@ platform :android do
       }
     )
 
-    gradle(task: "incrementVersionCode")
-
-    git_commit(path: "./*.gradle", message: "update version code")
-
-    push_to_git_remote
-
     # upload_to_play_store(
     #   json_key: ENV["CONFIG_JSON"]
     # )

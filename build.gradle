@@ -35,3 +35,9 @@ task incrementVersionCode {
         manifestFile.write(manifestContent)
     }
 }
+
+task printVersionName {
+    doLast {
+        println android.defaultConfig.versionName
+    }
+}
