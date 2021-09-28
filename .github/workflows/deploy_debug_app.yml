@@ -67,7 +67,7 @@ jobs:
         echo "::set-output name=STORE_PATH::${store_path}"
       id: store-path
 
-    - name: Import Keystore and Config File
+    - name: Import Keystore and Config
       run: |
         echo "${{ secrets.PLAY_CONFIG }}" > play_config.txt
         base64 --decode play_config.txt > ${{ steps.config-path.outputs.JSON_PATH }}
@@ -88,8 +88,8 @@ jobs:
 
     - name: Git Settings
       run: |
-        git config --local user.email "t_yamada@avelio.co.jp"
-        git config --local user.name "Taiki Yamada"
+        git config --local user.email "${{ runner.name }}"
+        git config --local user.name "runner"
 
     - name: Push Version Code
       run: |
