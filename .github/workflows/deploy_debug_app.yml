@@ -74,21 +74,21 @@ jobs:
         echo "${{ secrets.STORE_FILE }}" > release.txt
         base64 --decode release.txt > ${{ steps.store-path.outputs.STORE_PATH }}
 
-    - name: Upload Google Play
-      env:
-        CONFIG_JSON: ${{ steps.config-path.outputs.JSON_PATH }}
-        STORE_FILE: ${{ steps.store-path.outputs.STORE_PATH }}
-        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-      run: bundle exec fastlane deploy_debug
+    # - name: Upload Google Play
+    #   env:
+    #     CONFIG_JSON: ${{ steps.config-path.outputs.JSON_PATH }}
+    #     STORE_FILE: ${{ steps.store-path.outputs.STORE_PATH }}
+    #     STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+    #     KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+    #     KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+    #   run: bundle exec fastlane deploy_debug
 
     - name: Increment Version Code
       run: ./gradlew incrementVersionCode
 
     - name: Git Settings
       run: |
-        git config --local user.email "${{ runner.name }}"
+        git config --local user.email "runner@${{ runner.os }}"
         git config --local user.name "runner"
 
     - name: Push Version Code
