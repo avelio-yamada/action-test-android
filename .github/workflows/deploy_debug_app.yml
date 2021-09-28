@@ -93,7 +93,7 @@ jobs:
 
     - name: Push Version Code
       run: |
-        git add .
+        git add $GITHUB_WORKSPACE/app/build.gradle
         git commit -m "update version code" -a
         git pull
         git push origin main
