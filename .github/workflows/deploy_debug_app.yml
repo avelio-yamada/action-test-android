@@ -78,3 +78,13 @@ jobs:
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
       run: bundle exec fastlane deploy_debug
+
+    - name: Increment Version Code
+      run: ./gradlew incrementVersionCode
+
+    - name: Push Version Code
+      run: |
+        git add .
+        git commit -m "update version code" -a
+        git pull
+        git push origin main
