@@ -38,6 +38,10 @@ task incrementVersionCode {
 
 task printVersionName {
     doLast {
-        println android.defaultConfig.versionName
+        def pattern = "versionName (\\d+)"
+        def manifestFile = file("./app/build.gradle")
+        def manifestText = manifestFile.getText()
+
+        println Integer.parseInt((manifestText =~ pattern)[0][1])
     }
 }
