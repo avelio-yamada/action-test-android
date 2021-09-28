@@ -100,5 +100,6 @@ jobs:
 
     - name: Version Name
       run: |
-        version="./gradlew printVersionName"
+        echo ./gradlew printVersionName > version.txt
+        cat version.txt
         echo "v${version}"
