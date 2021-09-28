@@ -1,0 +1,16 @@
+current directory: /home/runner/work/action-test-android/action-test-android/vendor/bundle/ruby/2.7.0/gems/unf_ext-0.0.8/ext/unf_ext
+/opt/hostedtoolcache/Ruby/2.7.4/x64/bin/ruby -I /opt/hostedtoolcache/Ruby/2.7.4/x64/lib/ruby/2.7.0 -r ./siteconf20210928-1639-1x6a9rs.rb extconf.rb
+checking for -lstdc++... yes
+creating Makefile
+
+current directory: /home/runner/work/action-test-android/action-test-android/vendor/bundle/ruby/2.7.0/gems/unf_ext-0.0.8/ext/unf_ext
+make "DESTDIR=" clean
+
+current directory: /home/runner/work/action-test-android/action-test-android/vendor/bundle/ruby/2.7.0/gems/unf_ext-0.0.8/ext/unf_ext
+make "DESTDIR="
+compiling unf.cc
+linking shared-object unf_ext.so
+
+current directory: /home/runner/work/action-test-android/action-test-android/vendor/bundle/ruby/2.7.0/gems/unf_ext-0.0.8/ext/unf_ext
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 unf_ext.so ./.gem.20210928-1639-1q9ci56
