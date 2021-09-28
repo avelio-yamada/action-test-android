@@ -65,17 +65,5 @@ jobs:
 
     - name: Import Keystore and Config File
       run: |
-        echo "${{ secrets.STORE_FILE }}" > release.txt
-        echo release.txt
-        base64 --decode release.txt > ${{ steps.step-path.outputs.STORE_PATH }}
         echo "${{ secrets.PLAY_CONFIG }}" > play_config.txt
         base64 --decode play_config.txt > ${{ steps.step-path.outputs.JSON_PATH }}
-
-    - name: Upload Google Play
-      env:
-        CONFIG_JSON: ${{ steps.step-path.outputs.JSON_PATH }}
-        STORE_FILE: ${{ steps.step-path.outputs.STORE_PATH }}
-        STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-      run: bundle exec fastlane deploy_debug
