@@ -2,7 +2,7 @@ name: Deploy Release App to Google Play
 
 on:
   push:
-    branches: [ main ]
+    branches: [ release ]
 
 jobs:
   build:
