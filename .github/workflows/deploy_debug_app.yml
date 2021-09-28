@@ -55,13 +55,13 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Check Config Path
+    - name: Config Path
       run: |
         json_path=$GITHUB_WORKSPACE/app/play_config.json
         echo "::set-output name=JSON_PATH::${json_path}"
       id: config-path
 
-    - name: Check Keystore Path
+    - name: Keystore Path
       run: |
         store_path=$GITHUB_WORKSPACE/app/release.keystore
         echo "::set-output name=STORE_PATH::${store_path}"

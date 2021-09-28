@@ -35,9 +35,13 @@ platform :android do
 
     gradle(task: "incrementVersionCode")
 
-    upload_to_play_store(
-      json_key: ENV["CONFIG_JSON"]
-    )
+    git_commit(path: "./*.gradle", message: "update version code")
+
+    push_to_git_remote
+
+    # upload_to_play_store(
+    #   json_key: ENV["CONFIG_JSON"]
+    # )
   end
 
   desc "Deploy Release App to Google Play"
@@ -51,8 +55,9 @@ platform :android do
         "android.injected.signing.key.password" => ENV["KEY_PASSWORD"]
       }
     )
-    upload_to_play_store(
-      json_key: ENV["CONFIG_JSON"]
-    )
+
+    # upload_to_play_store(
+    #   json_key: ENV["CONFIG_JSON"]
+    # )
   end
 end
