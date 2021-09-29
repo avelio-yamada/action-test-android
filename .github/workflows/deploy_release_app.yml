@@ -2,7 +2,7 @@ name: Deploy Release App to Google Play
 
 on:
   push:
-    branches: [ release ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -57,7 +57,7 @@ jobs:
 
     - name: Config Path
       run: |
-        json_path=$GITHUB_WORKSPACE/app/play_config.json
+        json_path=$GITHUB_WORKSPACE/app/service_json.json
         echo "::set-output name=JSON_PATH::${json_path}"
       id: config-path
 
@@ -69,14 +69,14 @@ jobs:
 
     - name: Import Keystore and Config
       run: |
-        echo "${{ secrets.PLAY_CONFIG }}" > play_config.txt
-        base64 --decode play_config.txt > ${{ steps.config-path.outputs.JSON_PATH }}
+        echo "${{ secrets.SERVICE_JSON }}" > service_json.txt
+        base64 --decode service_json.txt > ${{ steps.config-path.outputs.JSON_PATH }}
         echo "${{ secrets.STORE_FILE }}" > release.txt
         base64 --decode release.txt > ${{ steps.store-path.outputs.STORE_PATH }}
 
     - name: Upload Google Play
       env:
-        CONFIG_JSON: ${{ steps.config-path.outputs.JSON_PATH }}
+        SERVICE_JSON: ${{ steps.config-path.outputs.JSON_PATH }}
         STORE_FILE: ${{ steps.store-path.outputs.STORE_PATH }}
         STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
@@ -93,4 +93,4 @@ jobs:
         version=$(./gradlew -q printVersionName | tail -n 1)
         git tag "v${version}"
         git pull
-        git push origin main
+        git push origin main --tags
