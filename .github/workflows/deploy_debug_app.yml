@@ -100,4 +100,5 @@ jobs:
 
     - name: Version Name
       run: |
-        ./gradlew printVersionName
+        version=${{ ./gradlew printVersionName }}
+        echo "v${{ version }}"
