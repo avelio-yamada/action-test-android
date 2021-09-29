@@ -38,7 +38,7 @@ task incrementVersionCode {
 
 task printVersionName {
     doLast {
-        // def pattern = "versionName \\"(\\d+)\\.(\\d+)\\.(\\d+)\\""
+        def pattern = "versionName \\"(\\d+)\\.(\\d+)\\.(\\d+)\\""
         def manifestFile = file("./app/build.gradle")
         def manifestText = manifestFile.getText()
         // println("version name " + (manifestText =~ pattern)[0][1])

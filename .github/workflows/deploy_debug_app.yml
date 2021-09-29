@@ -88,10 +88,6 @@ jobs:
 
     - name: Git Settings
       run: |
-        echo "os = ${{ runner.os }}"
-        echo "name = ${{ runner.name }}"
-        echo "temp = ${{ runner.temp }}"
-        echo "tool_cache = ${{ runner.tool_cache }}"
         git config --local user.email "runner@${{ runner.os }}"
         git config --local user.name "runner"
 
