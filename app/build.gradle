@@ -13,8 +13,8 @@ android {
         applicationId "co.jp.avelio.action_test"
         minSdk 26
         targetSdkVersion 30
-        versionCode 18
-        versionName "1.0.12"
+        versionCode 19
+        versionName "1.0.13"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
