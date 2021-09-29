@@ -23,7 +23,7 @@ task clean(type: Delete) {
 task incrementVersionCode {
     doFirst {
         println("Incrementing Version Code...")
-        def pattern = "versionCode (\d+)"
+        def pattern = "versionCode (\\d+)"
         def manifestFile = file("./app/build.gradle")
         def manifestText = manifestFile.getText()
 
@@ -38,10 +38,11 @@ task incrementVersionCode {
 
 task printVersionName {
     doLast {
-        def pattern = "versionName \"(\d+)\.(\d+)\.(\d+)\""
+        def versionNamePattern = "versionName \"(\\d+).(\\d+).(\\d+)\""
         def manifestFile = file("./app/build.gradle")
         def manifestText = manifestFile.getText()
-        // println("version name " + (manifestText =~ pattern)[0][1])
-        println("version name " + manifestText)
+        def versionName = (manifestText =~ pattern)[0][0]
+        def versionPattern = "(\\d+).(\\d+).(\\d+)"
+        println((versionName =~ versionPattern)[0][0])
     }
 }
