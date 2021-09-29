@@ -30,7 +30,7 @@ task incrementVersionCode {
         def code = Integer.parseInt((manifestText =~ pattern)[0][1])
         def nextCode = code + 1
 
-        println("Set versionCode(" + code + ") to " + nextCode);
+        println("Set versionCode(" + code + ") to " + nextCode)
         def manifestContent = manifestText.replaceAll(pattern, "versionCode " + nextCode)
         manifestFile.write(manifestContent)
     }
@@ -41,7 +41,6 @@ task printVersionName {
         def pattern = "versionName \\"(\\d+)\\.(\\d+).(\\d+)\\""
         def manifestFile = file("./app/build.gradle")
         def manifestText = manifestFile.getText()
-
-        println Integer.parseInt((manifestText =~ pattern)[0][1])
+        println("version name " + Integer.parseInt((manifestText =~ pattern)[0][1]))
     }
 }

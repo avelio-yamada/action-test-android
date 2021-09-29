@@ -55,24 +55,24 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Config Path
-      run: |
-        json_path=$GITHUB_WORKSPACE/app/play_config.json
-        echo "::set-output name=JSON_PATH::${json_path}"
-      id: config-path
+    # - name: Config Path
+    #   run: |
+    #     json_path=$GITHUB_WORKSPACE/app/play_config.json
+    #     echo "::set-output name=JSON_PATH::${json_path}"
+    #   id: config-path
 
-    - name: Keystore Path
-      run: |
-        store_path=$GITHUB_WORKSPACE/app/release.keystore
-        echo "::set-output name=STORE_PATH::${store_path}"
-      id: store-path
+    # - name: Keystore Path
+    #   run: |
+    #     store_path=$GITHUB_WORKSPACE/app/release.keystore
+    #     echo "::set-output name=STORE_PATH::${store_path}"
+    #   id: store-path
 
-    - name: Import Keystore and Config
-      run: |
-        echo "${{ secrets.PLAY_CONFIG }}" > play_config.txt
-        base64 --decode play_config.txt > ${{ steps.config-path.outputs.JSON_PATH }}
-        echo "${{ secrets.STORE_FILE }}" > release.txt
-        base64 --decode release.txt > ${{ steps.store-path.outputs.STORE_PATH }}
+    # - name: Import Keystore and Config
+    #   run: |
+    #     echo "${{ secrets.PLAY_CONFIG }}" > play_config.txt
+    #     base64 --decode play_config.txt > ${{ steps.config-path.outputs.JSON_PATH }}
+    #     echo "${{ secrets.STORE_FILE }}" > release.txt
+    #     base64 --decode release.txt > ${{ steps.store-path.outputs.STORE_PATH }}
 
     # - name: Upload Google Play
     #   env:
@@ -88,6 +88,8 @@ jobs:
 
     - name: Git Settings
       run: |
+        echo "os = ${{ runner.os }}"
+        echo "os = ${{ runner.name }}"
         git config --local user.email "runner@${{ runner.os }}"
         git config --local user.name "runner"
 
