@@ -103,4 +103,4 @@ jobs:
         version=$(./gradlew -q printVersionName | tail -n 1)
         git tag "v${version}"
         git pull
-        git push origin main
+        git push origin main --tags
