@@ -23,7 +23,7 @@ task clean(type: Delete) {
 task incrementVersionCode {
     doFirst {
         println("Incrementing Version Code...")
-        def pattern = "versionCode (\\d+)"
+        def pattern = "versionCode (\d+)"
         def manifestFile = file("./app/build.gradle")
         def manifestText = manifestFile.getText()
 
