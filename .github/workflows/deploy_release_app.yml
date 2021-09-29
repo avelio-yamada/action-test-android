@@ -87,3 +87,10 @@ jobs:
       run: |
         git config --local user.email "runner@${{ runner.os }}"
         git config --local user.name "runner"
+
+    - name: Add Tag
+      run: |
+        version=$(./gradlew -q printVersionName | tail -n 1)
+        git tag "v${version}"
+        git pull
+        git push origin main
