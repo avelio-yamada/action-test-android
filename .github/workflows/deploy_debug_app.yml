@@ -1,4 +1,4 @@
-name: Deploy Debug App to Google Play
+name: Deploy Debug App
 
 on:
   push:

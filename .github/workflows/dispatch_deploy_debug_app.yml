@@ -1,12 +1,11 @@
-name: Deploy Release App
+name: Deploy Debug App to Google Play
 
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
-    name: Deploy Release App to Google Play
+    name: Deploy Debug App to Google Play
     runs-on: ubuntu-latest
 
     steps:
@@ -81,16 +80,17 @@ jobs:
         STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
         KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-      run: bundle exec fastlane deploy_release
+      run: bundle exec fastlane deploy_debug
 
     - name: Git Settings
       run: |
         git config --local user.email "runner@${{ runner.os }}"
         git config --local user.name "runner"
 
-    - name: Add Tag
+    - name: Increment Version Code
       run: |
-        version=$(./gradlew -q printVersionName | tail -n 1)
-        git tag "v${version}"
+        ./gradlew incrementVersionCode
+        git add $GITHUB_WORKSPACE/app/build.gradle
+        git commit -m "update version code" -a
         git pull
-        git push origin main -f --tags
+        git push origin release
