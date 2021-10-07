@@ -12,4 +12,4 @@ jobs:
     steps:
     - name: Test
       run: |
-        echo ${{ on }}
+        echo ${GITHUB_WORKFLOW}
