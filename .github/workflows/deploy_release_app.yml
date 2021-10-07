@@ -91,6 +91,6 @@ jobs:
     - name: Add Tag
       run: |
         version=$(./gradlew -q printVersionName | tail -n 1)
-        git tag "v${version}"
+        git tag "${version}"
         git pull
         git push origin main -f --tags
