@@ -7,7 +7,6 @@ on:
 jobs:
   build:
     name: Test
-    if: startsWith(github.event.head_commit.message, '\deploy_debug')
     runs-on: ubuntu-latest
 
     steps:
