@@ -69,10 +69,13 @@ jobs:
 
     - name: Import Keystore and Json
       run: |
-        echo "${{ secrets.SERVICE_JSON }}" > service_json.txt
-        base64 --decode service_json.txt > ${{ steps.json-path.outputs.JSON_PATH }}
-        echo "${{ secrets.STORE_FILE }}" > release.txt
-        base64 --decode release.txt > ${{ steps.store-path.outputs.STORE_PATH }}
+        echo "${{ secrets.SERVICE_JSON }}"
+        echo "${{ secrets.STORE_FILE }}"
+        echo "${{ secrets.NONE }}"
+#        echo "${{ secrets.SERVICE_JSON }}" > service_json.txt
+#        base64 --decode service_json.txt > ${{ steps.json-path.outputs.JSON_PATH }}
+#        echo "${{ secrets.STORE_FILE }}" > release.txt
+#        base64 --decode release.txt > ${{ steps.store-path.outputs.STORE_PATH }}
 
     - name: Test
       run: |
