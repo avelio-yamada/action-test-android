@@ -15,4 +15,4 @@ jobs:
 
     - name: Test
       run: |
-        echo "running on branch is" ${GITHUB_REF##*/}"
+        echo running on branch ${GITHUB_REF##*/}
