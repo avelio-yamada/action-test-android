@@ -16,3 +16,11 @@ jobs:
     - name: Test
       run: |
         echo running on branch ${GITHUB_REF##*/}
+
+    - name: Add Tag
+      run: |
+        git config --local user.email "runner@${{ runner.os }}"
+        git config --local user.name "runner"
+        git tag "test"
+        git pull
+        git push origin ${GITHUB_REF##*/} -f --tags
