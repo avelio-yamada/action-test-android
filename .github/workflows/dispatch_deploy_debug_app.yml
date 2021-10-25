@@ -89,8 +89,8 @@ jobs:
 
     - name: Increment Version Code
       run: |
+        git pull
         ./gradlew incrementVersionCode
         git add $GITHUB_WORKSPACE/app/build.gradle
         git commit -m "update version code" -a
-        git pull
         git push origin release
