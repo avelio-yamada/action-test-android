@@ -2,7 +2,7 @@ name: Deploy Debug App
 
 on:
   push:
-    branches: [ release ]
+    branches: [ develop ]
 
 jobs:
   build:
