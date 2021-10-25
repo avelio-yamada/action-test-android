@@ -2,12 +2,12 @@ name: Deploy Debug App
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ release ]
 
 jobs:
   build:
     name: Deploy Debug App to Google Play
-    # if: startsWith(github.event.head_commit.message, '\deploy_debug')
+    if: startsWith(github.event.head_commit.message, '\deploy_debug')
     runs-on: ubuntu-latest
 
     steps:
