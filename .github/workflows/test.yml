@@ -86,4 +86,4 @@ jobs:
     - name: Find apk
       run: |
         path=$(find . -type f -name "*.apk")
-        echo path
+        echo "path = $path"
