@@ -84,4 +84,6 @@ jobs:
       run: bundle exec fastlane deploy_debug
 
     - name: Find apk
-      run: find . f -name "*.apk"
+      run: |
+        path=$(find . -type f -name "*.apk")
+        echo path
